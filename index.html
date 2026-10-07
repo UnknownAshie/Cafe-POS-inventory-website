@@ -1,0 +1,1443 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cozea Cafe | Cafe POS &amp; Inventory</title>
+    <meta name="description" content="Cozea Cafe point of sale, menu, and inventory workspace.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;700;800&display=swap');
+         :root {
+            --ink: #33251f;
+            --muted: #81746b;
+            --line: #e7ddd2;
+            --paper: #f7f2ea;
+            --teal: #58745d;
+            --teal-dark: #405b46;
+            --coral: #c47b58;
+            --shadow: 0 18px 50px rgba(61, 42, 31, .08)
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font: 15px/1.6 Manrope, sans-serif
+        }
+        
+        button,
+        input {
+            font: inherit
+        }
+        
+        button {
+            cursor: pointer
+        }
+        
+        .site-header {
+            background: var(--ink);
+            color: #fff
+        }
+        
+        .header-inner,
+        .navbar,
+        .page-shell,
+        footer {
+            max-width: 1180px;
+            margin: auto
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 34px 25px
+        }
+        
+        .brand {
+            display: flex;
+            gap: 13px;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: -.5px
+        }
+        
+        .brand small {
+            display: block;
+            color: #a7b7b1;
+            font: 11px 'DM Mono', monospace;
+            letter-spacing: 0;
+            text-transform: uppercase
+        }
+        
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            background: var(--coral);
+            font: 500 13px 'DM Mono', monospace
+        }
+        
+        .header-note {
+            color: #a7b7b1;
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase
+        }
+        
+        .status-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: #71c7a1;
+            border-radius: 50%;
+            margin-right: 7px
+        }
+        
+        .navbar {
+            display: flex;
+            gap: 4px;
+            padding: 0 34px
+        }
+        
+        .nav-button {
+            border: 0;
+            background: transparent;
+            color: #aabbb6;
+            padding: 15px 18px 18px;
+            text-align: left;
+            border-bottom: 3px solid transparent;
+            font-weight: 700;
+            font-size: 13px
+        }
+        
+        .nav-button span {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            color: #70847e
+        }
+        
+        .nav-button.is-active {
+            color: #fff;
+            border-color: var(--coral)
+        }
+        
+        .nav-button.is-active span {
+            color: #b8cec5
+        }
+        
+        .page-shell {
+            padding: 60px 34px 90px
+        }
+        
+        .tab-panel {
+            animation: rise .3s ease
+        }
+        
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 35px
+        }
+        
+        .eyebrow {
+            color: var(--coral);
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 10px
+        }
+        
+        .eyebrow span {
+            color: var(--muted)
+        }
+        
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0
+        }
+        
+        h1 {
+            font-size: clamp(30px, 4vw, 46px);
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 10px
+        }
+        
+        h2 {
+            font-size: 18px;
+            letter-spacing: -.5px
+        }
+        
+        .lede {
+            color: var(--muted);
+            margin-bottom: 0
+        }
+        
+        .button {
+            border: 0;
+            padding: 12px 18px;
+            font-weight: 800;
+            font-size: 13px
+        }
+        
+        .button-primary {
+            background: var(--teal);
+            color: #fff
+        }
+        
+        .button-primary:hover {
+            background: var(--teal-dark)
+        }
+        
+        .button-secondary {
+            background: #e0ebe5;
+            color: var(--teal-dark)
+        }
+        
+        .button-quiet {
+            background: transparent;
+            color: var(--muted)
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 26px
+        }
+        
+        .purchase-metrics {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-bottom: 26px
+        }
+        
+        .metric {
+            background: #fff;
+            padding: 22px 24px;
+            border-left: 3px solid var(--teal);
+            box-shadow: var(--shadow)
+        }
+        
+        .metric span,
+        .metric small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px
+        }
+        
+        .metric strong {
+            display: block;
+            font-size: 31px;
+            line-height: 1.2;
+            margin-top: 5px
+        }
+        
+        .metric-accent {
+            border-color: var(--coral)
+        }
+        
+        .table-card,
+        .form-card {
+            background: #fff;
+            box-shadow: var(--shadow)
+        }
+        
+        .card-heading {
+            display: flex;
+            justify-content: space-between;
+            padding: 25px 27px 18px
+        }
+        
+        .card-heading h2 {
+            margin-bottom: 2px
+        }
+        
+        .card-heading p {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 0
+        }
+        
+        .record-count {
+            color: var(--muted);
+            font: 11px 'DM Mono', monospace
+        }
+        
+        .table-wrap {
+            overflow-x: auto
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left
+        }
+        
+        th {
+            color: #86928f;
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+        
+        th,
+        td {
+            padding: 15px 27px;
+            border-top: 1px solid #edf1ee
+        }
+        
+        td {
+            font-size: 13px
+        }
+        
+        .item-name {
+            font-weight: 800
+        }
+        
+        .category {
+            color: var(--muted)
+        }
+        
+        .pill {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #e2f1e7;
+            color: #297251;
+            font-size: 11px
+        }
+        
+        .pill.low {
+            background: #fff0e9;
+            color: #bd593d
+        }
+        
+        .row-action {
+            background: none;
+            border: 0;
+            color: var(--teal);
+            font-weight: 800;
+            font-size: 12px;
+            margin-right: 12px
+        }
+        
+        .row-action.delete {
+            color: #c6604c
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 55px 20px;
+            color: var(--muted)
+        }
+        
+        .empty-icon {
+            margin: auto auto 12px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border: 1px dashed var(--teal);
+            color: var(--teal);
+            font-size: 22px
+        }
+        
+        .empty-state h3 {
+            color: var(--ink);
+            margin-bottom: 4px
+        }
+        
+        .empty-state p {
+            margin-bottom: 18px
+        }
+        
+        .manage-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 310px;
+            gap: 20px;
+            margin-bottom: 25px
+        }
+        
+        .form-card {
+            padding: 0 27px 25px
+        }
+        
+        .form-card .card-heading {
+            padding-left: 0;
+            padding-right: 0
+        }
+        
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            margin: 18px 0 7px
+        }
+        
+        label span {
+            color: var(--coral);
+            font: 10px 'DM Mono', monospace;
+            margin-left: 5px
+        }
+        
+        input[type=text],
+        input[type=number] {
+            width: 100%;
+            border: 1px solid var(--line);
+            padding: 12px 13px;
+            outline: 0;
+            background: #fbfcfa
+        }
+        
+        input:focus {
+            border-color: var(--teal)
+        }
+        
+        .form-actions {
+            margin-top: 24px;
+            display: flex;
+            gap: 8px
+        }
+        
+        .form-message {
+            color: var(--coral);
+            font-size: 12px;
+            margin: 13px 0 0
+        }
+        
+        .tip-card {
+            background: var(--teal);
+            color: #fff;
+            padding: 29px
+        }
+        
+        .tip-label,
+        .storage-number {
+            color: #9ed4c6;
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase
+        }
+        
+        .tip-card h2 {
+            font-size: 25px;
+            line-height: 1.2;
+            margin: 35px 0 10px
+        }
+        
+        .tip-card p {
+            color: #c7ddd7;
+            font-size: 13px
+        }
+        
+        .text-link {
+            padding: 0;
+            background: none;
+            border: 0;
+            color: #9ed4c6;
+            font-weight: 800;
+            font-size: 12px
+        }
+        
+        .text-link span {
+            font-size: 18px;
+            margin-left: 5px
+        }
+        
+        .management-table {
+            overflow: hidden
+        }
+        
+        .storage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px
+        }
+        
+        .storage-card {
+            background: #fff;
+            padding: 30px;
+            min-height: 250px;
+            box-shadow: var(--shadow);
+            border-top: 3px solid var(--teal)
+        }
+        
+        .storage-card:nth-child(2) {
+            border-color: var(--coral)
+        }
+        
+        .storage-card h2 {
+            font-size: 23px;
+            margin: 35px 0 8px
+        }
+        
+        .storage-card p {
+            color: var(--muted);
+            font-size: 13px;
+            max-width: 380px;
+            margin-bottom: 25px
+        }
+        
+        .file-button {
+            display: inline-block
+        }
+        
+        .storage-card input[type=file] {
+            display: none
+        }
+        
+        .storage-note {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding: 18px 0;
+            color: var(--muted);
+            font-size: 12px
+        }
+        
+        .storage-note strong {
+            color: var(--ink)
+        }
+        
+        .danger-link {
+            margin-left: auto;
+            color: var(--coral)
+        }
+        
+        .admin-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: rgba(24, 38, 45, .72)
+        }
+        
+        .admin-modal[hidden] {
+            display: none
+        }
+        
+        .admin-dialog {
+            position: relative;
+            width: min(100%, 410px);
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .25)
+        }
+        
+        .admin-dialog h2 {
+            margin-bottom: 7px;
+            font-size: 25px
+        }
+        
+        .admin-dialog p {
+            color: var(--muted);
+            font-size: 13px
+        }
+        
+        .admin-dialog label {
+            margin-top: 25px
+        }
+        
+        .admin-dialog input {
+            width: 100%;
+            border: 1px solid var(--line);
+            padding: 12px 13px;
+            outline: 0
+        }
+        
+        .admin-dialog input:focus {
+            border-color: var(--teal)
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px
+        }
+        
+        .admin-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 24px
+        }
+        
+        .admin-message {
+            min-height: 20px;
+            margin: 12px 0 0 !important;
+            color: var(--coral) !important
+        }
+        
+        .pos-card {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 280px;
+            gap: 24px;
+            margin-bottom: 26px;
+            padding: 25px 27px;
+            background: var(--ink);
+            color: #fff;
+            box-shadow: var(--shadow)
+        }
+        
+        .pos-card h2 {
+            margin-bottom: 3px
+        }
+        
+        .pos-card p {
+            margin-bottom: 0;
+            color: #a7b7b1;
+            font-size: 12px
+        }
+        
+        .pos-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 120px auto;
+            gap: 10px;
+            align-items: end
+        }
+        
+        .pos-form label {
+            margin: 0 0 7px;
+            color: #c7ddd7
+        }
+        
+        .pos-field {
+            min-width: 0
+        }
+        
+        .pos-form select,
+        .pos-form input {
+            width: 100%;
+            border: 1px solid #49605e;
+            padding: 12px 13px;
+            outline: 0;
+            background: #26383d;
+            color: #fff
+        }
+        
+        .pos-form select:focus,
+        .pos-form input:focus {
+            border-color: #9ed4c6
+        }
+        
+        .pos-message {
+            grid-column: 1 / -1;
+            min-height: 20px;
+            margin: 0;
+            color: #9ed4c6 !important
+        }
+        
+        .pos-availability {
+            align-self: center;
+            padding-left: 22px;
+            border-left: 1px solid #49605e;
+        }
+        
+        .pos-availability span {
+            display: block;
+            color: #a7b7b1;
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase
+        }
+        
+        .pos-availability strong {
+            display: block;
+            margin-top: 3px;
+            font-size: 26px
+        }
+
+        .pos-availability .order-total {
+            margin-top: 13px;
+            color: #e8b990
+        }
+
+        .menu-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: -12px 0 22px
+        }
+
+        .menu-toolbar label {
+            display: inline;
+            margin: 0 10px 0 0
+        }
+
+        .menu-toolbar select {
+            border: 1px solid var(--line);
+            padding: 10px 12px;
+            background: #fff;
+            color: var(--ink);
+            font: inherit
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px
+        }
+
+        .menu-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 218px;
+            padding: 23px;
+            background: #fff;
+            box-shadow: var(--shadow);
+            border-top: 3px solid var(--coral)
+        }
+
+        .menu-card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--muted);
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase
+        }
+
+        .menu-card h2 {
+            margin: 24px 0 5px;
+            font-size: 21px
+        }
+
+        .menu-card p {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .menu-card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: auto
+        }
+
+        .menu-card-price {
+            font-size: 19px;
+            font-weight: 800
+        }
+
+        .menu-card .button {
+            padding: 9px 12px
+        }
+
+        .menu-empty {
+            grid-column: 1 / -1
+        }
+        
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 34px 35px;
+            color: #899692;
+            font: 11px 'DM Mono', monospace;
+            text-transform: uppercase
+        }
+        
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+        
+        [hidden] {
+            display: none!important
+        }
+        
+        @media(max-width:700px) {
+            .header-inner {
+                padding: 24px 20px
+            }
+            .header-note {
+                display: none
+            }
+            .navbar {
+                padding: 0 20px;
+                overflow-x: auto
+            }
+            .nav-button {
+                min-width: 145px;
+                padding: 13px 10px
+            }
+            .page-shell {
+                padding: 38px 20px 60px
+            }
+            .page-heading {
+                display: block
+            }
+            .page-heading>.button {
+                margin-top: 22px
+            }
+            .metrics,
+            .storage-grid,
+            .manage-grid,
+            .pos-card,
+            .menu-grid {
+                grid-template-columns: 1fr
+            }
+            .pos-form {
+                grid-template-columns: 1fr 100px
+            }
+            .pos-form .button {
+                grid-column: 1 / -1
+            }
+            .pos-availability {
+                padding: 15px 0 0;
+                border-top: 1px solid #49605e;
+                border-left: 0
+            }
+            .metric {
+                padding: 17px 20px
+            }
+            .card-heading,
+            td,
+            th {
+                padding-left: 18px;
+                padding-right: 18px
+            }
+            .table-card {
+                overflow: hidden
+            }
+            .storage-note {
+                display: block
+            }
+            .storage-note>* {
+                display: block;
+                margin: 8px 0
+            }
+            .danger-link {
+                margin-top: 18px
+            }
+            footer {
+                padding-left: 20px;
+                padding-right: 20px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">CC</span><span>Cozea Cafe<small>Counter &amp; pantry</small></span></a>
+            <div class="header-note"><span class="status-dot"></span> Cafe is open · Local workspace</div>
+        </div>
+        <nav class="navbar" aria-label="Main navigation"><button class="nav-button is-active" type="button" data-tab="home">Dashboard <span>Today's service</span></button><button class="nav-button" type="button" data-tab="menu">Cafe menu <span>Drinks &amp; bites</span></button><button class="nav-button" type="button" data-tab="purchases">Sales <span>Order history</span></button><button class="nav-button"
+                type="button" data-tab="manage">Stock &amp; menu</button><button class="nav-button" type="button" data-tab="storage">Backup <span>Import / export</span></button></nav>
+    </header>
+    <main class="page-shell">
+        <section class="tab-panel is-active" data-panel="home">
+            <div class="page-heading">
+                <div>
+                    <p class="eyebrow">Cozea Cafe / <span id="today"></span></p>
+                    <h1>Good day. Ready to serve?</h1>
+                    <p class="lede">Your counter, menu, and pantry stock at a glance.</p>
+                </div><button class="button button-primary" type="button" data-tab="menu">Browse cafe menu</button></div>
+            <div class="metrics">
+                <article class="metric"><span>Menu items</span><strong id="item-count">0</strong></article>
+                <article class="metric"><span>Servings in stock</span><strong id="unit-count">0</strong></article>
+                <article class="metric metric-accent"><span>Running low</span><strong id="low-stock-count">0</strong><small>5 servings or fewer</small></article>
+            </div>
+            <section class="pos-card" aria-labelledby="pos-title">
+                <div>
+                    <div class="card-heading" style="padding:0 0 18px">
+                        <div>
+                            <h2 id="pos-title">Take an order</h2>
+                            <p>Choose a menu item, set the quantity, and send it through.</p>
+                        </div>
+                    </div>
+                    <form class="pos-form" id="pos-form">
+                        <div class="pos-field"><label for="pos-item">Menu item</label><select id="pos-item" required><option value="">Choose a drink or bite</option></select></div>
+                        <div class="pos-field"><label for="pos-quantity">Qty</label><input id="pos-quantity" type="number" min="1" step="1" value="1" required></div>
+                        <button class="button button-primary" type="submit">Complete order</button>
+                        <p class="pos-message" id="pos-message" role="status"></p>
+                    </form>
+                </div>
+                <div class="pos-availability"><span>Available today</span><strong id="pos-available">Choose a menu item</strong><span class="order-total">Order total</span><strong id="pos-total">₱0.00</strong></div>
+            </section>
+            <div class="table-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Pantry &amp; counter stock</h2>
+                        <p>Stock counts update as each order is completed.</p>
+                    </div><span class="record-count" id="record-count">0 records</span></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Last updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table"></tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-icon">+</div>
+                    <h3>Your menu is waiting</h3>
+                    <p>Add your first cafe item to start taking orders.</p><button class="button button-secondary" type="button" data-tab="manage">Add a menu item</button></div>
+            </div>
+        </section>
+        <section class="tab-panel" data-panel="menu" hidden>
+            <div class="page-heading">
+                <div>
+                    <p class="eyebrow">Cozea Cafe / <span>Made with care</span></p>
+                    <h1>Something good is brewing.</h1>
+                    <p class="lede">Explore today's drinks and little treats. Add an item to start an order.</p>
+                </div><button class="button button-primary" type="button" data-tab="manage">+ Add menu item</button>
+            </div>
+            <div class="menu-toolbar"><span class="record-count" id="menu-count">0 items on the menu</span><div><label for="menu-filter">Show</label><select id="menu-filter"><option value="all">Everything</option></select></div></div>
+            <div class="menu-grid" id="menu-grid"></div>
+        </section>
+        <section class="tab-panel" data-panel="purchases" hidden>
+            <div class="page-heading">
+                <div>
+                    <p class="eyebrow">Cozea Cafe / <span>Order book</span></p>
+                    <h1>Sales &amp; orders</h1>
+                    <p class="lede">Every completed order, kept close at hand.</p>
+                </div>
+            </div>
+            <div class="metrics purchase-metrics">
+                <article class="metric"><span>Orders completed</span><strong id="purchase-count">0</strong></article>
+                <article class="metric metric-accent"><span>Servings sold</span><strong id="purchased-unit-count">0</strong></article>
+                <article class="metric"><span>Sales recorded</span><strong id="sales-revenue">₱0.00</strong></article>
+            </div>
+            <div class="table-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Today's order book</h2>
+                        <p>Completed orders and their totals.</p>
+                    </div><span class="record-count" id="purchase-record-count">0 records</span></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date and time</th>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Qty</th>
+                                <th>Each</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchase-table"></tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="purchase-empty-state">
+                    <div class="empty-icon">-</div>
+                    <h3>No orders just yet</h3>
+                    <p>Completed counter orders will show up here.</p>
+                </div>
+            </div>
+        </section>
+        <section class="tab-panel" data-panel="manage" hidden>
+            <div class="page-heading">
+                <div>
+                    <p class="eyebrow">Cozea Cafe / <span>Back of house</span></p>
+                    <h1>Stock &amp; menu setup</h1>
+                    <p class="lede">Keep menu prices and available servings up to date.</p>
+                </div>
+            </div>
+            <div class="manage-grid">
+                <form class="form-card" id="inventory-form">
+                    <div class="card-heading">
+                        <div>
+                            <h2 id="form-title">Add a menu item</h2>
+                            <p>Give each cafe favourite a price and starting stock.</p>
+                        </div>
+                    </div><input type="hidden" id="item-id"><label for="item-name">Menu item <span>Required</span></label><input id="item-name" type="text" placeholder="e.g. Flat white" required maxlength="80"><label for="item-category">Category</label>
+                    <input id="item-category" type="text" placeholder="e.g. Coffee, Tea, Pastry" maxlength="50"><label for="item-price">Price (PHP) <span>Required</span></label><input id="item-price" type="number" min="0" step="0.01" placeholder="0.00" required><label for="item-quantity">Servings in stock <span>Required</span></label><input id="item-quantity" type="number" min="0" step="1" placeholder="0" required>
+                    <div class="form-actions"><button class="button button-primary" type="submit" id="save-button">Save menu item</button><button class="button button-quiet" type="button" id="cancel-button" hidden>Cancel edit</button></div>
+                    <p class="form-message" id="form-message" role="status"></p>
+                </form>
+                <aside class="tip-card"><span class="tip-label">Quick note</span>
+                    <h2>Good coffee. Good records.</h2>
+                    <p>Your menu, stock, and order history stay in this browser. Save a backup from the storage tab.</p><button class="text-link" type="button" data-tab="storage">Open backup tools <span>-></span></button></aside>
+            </div>
+            <div class="table-card management-table">
+                <div class="card-heading">
+                    <div>
+                        <h2>Menu &amp; stock records</h2>
+                        <p>Edit prices or adjust servings whenever you need.</p>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="management-table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="tab-panel" data-panel="storage" hidden>
+            <div class="page-heading">
+                <div>
+                    <p class="eyebrow">Cozea Cafe / <span>Keep it safe</span></p>
+                    <h1>Backup your cafe data</h1>
+                    <p class="lede">Take your menu, prices, and stock with you in a simple text file.</p>
+                </div>
+            </div>
+            <div class="storage-grid">
+                <article class="storage-card"><span class="storage-number">01</span>
+                    <h2>Export cafe menu</h2>
+                    <p>Download menu items, prices, and servings as a readable <strong>.txt</strong> file.</p><button class="button button-primary" type="button" id="export-button">Download cafe backup</button></article>
+                <article class="storage-card"><span class="storage-number">02</span>
+                    <h2>Import cafe menu</h2>
+                    <p>Load a previously exported file. Imported records replace the current menu and stock.</p><label class="button button-secondary file-button" for="import-file">Choose .txt file</label><input id="import-file" type="file" accept=".txt,text/plain">
+                    <p class="form-message" id="storage-message" role="status"></p>
+                </article>
+            </div>
+            <div class="storage-note"><strong>Local-first storage</strong><span id="storage-summary">0 records currently saved in this browser.</span><button class="text-link danger-link" type="button" id="clear-button">Clear all menu &amp; stock</button></div>
+        </section>
+    </main>
+    <div class="admin-modal" id="admin-modal" hidden>
+        <form class="admin-dialog" id="admin-form">
+            <button class="admin-close" id="admin-close" type="button" aria-label="Close admin password dialog">x</button>
+            <p class="eyebrow">Restricted area</p>
+            <h2>Admin access required</h2>
+            <p>Enter the administrator password to manage the cafe, view sales, or access backups.</p>
+            <label for="admin-password">Admin password</label>
+            <input id="admin-password" type="password" autocomplete="current-password" required>
+            <p class="admin-message" id="admin-message" role="alert"></p>
+            <div class="admin-actions"><button class="button button-primary" type="submit">Unlock</button><button class="button button-quiet" id="admin-cancel" type="button">Cancel</button></div>
+        </form>
+    </div>
+    <footer><span>Cozea Cafe · Counter &amp; pantry</span><span>Made for your daily brew · Local data only</span></footer>
+    <script>
+        (() => {
+            const storageKey = 'admin';
+            const purchaseStorageKey = 'steel-asia-purchases';
+            const adminPassword = 'admin123';
+            let inventory = readInventory();
+            let purchases = readPurchases();
+            let pendingAdminAction = null;
+            const $ = (selector) => document.querySelector(selector);
+            const $$ = (selector) => [...document.querySelectorAll(selector)];
+
+            function readInventory() {
+                try {
+                    const saved = localStorage.getItem(storageKey);
+                    if (saved === null) {
+                        const now = new Date().toISOString();
+                        const starterMenu = [{
+                            id: 'cafe-cappuccino',
+                            name: 'Cappuccino',
+                            category: 'Coffee',
+                            price: 155,
+                            quantity: 18,
+                            updatedAt: now
+                        }, {
+                            id: 'cafe-flat-white',
+                            name: 'Flat white',
+                            category: 'Coffee',
+                            price: 165,
+                            quantity: 16,
+                            updatedAt: now
+                        }, {
+                            id: 'cafe-spanish-latte',
+                            name: 'Spanish latte',
+                            category: 'Coffee',
+                            price: 185,
+                            quantity: 14,
+                            updatedAt: now
+                        }, {
+                            id: 'cafe-matcha',
+                            name: 'Iced matcha latte',
+                            category: 'Tea & matcha',
+                            price: 195,
+                            quantity: 12,
+                            updatedAt: now
+                        }, {
+                            id: 'cafe-cold-brew',
+                            name: 'Cold brew',
+                            category: 'Coffee',
+                            price: 175,
+                            quantity: 15,
+                            updatedAt: now
+                        }, {
+                            id: 'cafe-croissant',
+                            name: 'Butter croissant',
+                            category: 'Bakery',
+                            price: 120,
+                            quantity: 10,
+                            updatedAt: now
+                        }];
+                        localStorage.setItem(storageKey, JSON.stringify(starterMenu));
+                        return starterMenu;
+                    }
+                    const items = JSON.parse(saved);
+                    return Array.isArray(items) ? items : [];
+                } catch (error) {
+                    console.error('Unable to read or initialize cafe inventory.', error);
+                    return [];
+                }
+            }
+
+            function readPurchases() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem(purchaseStorageKey));
+                    return Array.isArray(saved) ? saved : [];
+                } catch (error) {
+                    console.error('Unable to read purchase records.', error);
+                    return [];
+                }
+            }
+
+            function saveInventory() {
+                localStorage.setItem(storageKey, JSON.stringify(inventory));
+                render();
+            }
+
+            function savePurchases() {
+                localStorage.setItem(purchaseStorageKey, JSON.stringify(purchases));
+            }
+
+            function formatDate(value) {
+                return new Intl.DateTimeFormat('en', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                }).format(new Date(value));
+            }
+
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('en-PH', {
+                    style: 'currency',
+                    currency: 'PHP'
+                }).format(Number(value) || 0);
+            }
+
+            function itemPrice(item) {
+                const price = Number(item.price);
+                return Number.isFinite(price) && price >= 0 ? price : 0;
+            }
+
+            function escapeHtml(value) {
+                return String(value).replace(/[&<>'"]/g, (char) => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#039;',
+                    '"': '&quot;'
+                }[char]));
+            }
+
+            function render() {
+                const units = inventory.reduce((sum, item) => sum + item.quantity, 0),
+                    low = inventory.filter((item) => item.quantity <= 5).length;
+                if ($('#item-count')) $('#item-count').textContent = inventory.length;
+                if ($('#unit-count')) $('#unit-count').textContent = units;
+                if ($('#low-stock-count')) $('#low-stock-count').textContent = low;
+                if ($('#record-count')) $('#record-count').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'}`;
+                if ($('#storage-summary')) $('#storage-summary').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'} currently saved in this browser.`;
+                const purchasedUnits = purchases.reduce((sum, purchase) => sum + purchase.quantity, 0);
+                if ($('#purchase-count')) $('#purchase-count').textContent = purchases.length;
+                if ($('#purchased-unit-count')) $('#purchased-unit-count').textContent = purchasedUnits;
+                if ($('#purchase-record-count')) $('#purchase-record-count').textContent = `${purchases.length} record${purchases.length === 1 ? '' : 's'}`;
+                if ($('#sales-revenue')) $('#sales-revenue').textContent = formatCurrency(purchases.reduce((sum, purchase) => sum + (Number(purchase.total) || (Number(purchase.unitPrice ?? purchase.price) || 0) * Number(purchase.quantity)), 0));
+                if ($('#purchase-table')) {
+                    $('#purchase-table').innerHTML = purchases.map((purchase) => {
+                        const unitPrice = Number(purchase.unitPrice ?? purchase.price) || 0;
+                        const total = Number(purchase.total) || unitPrice * Number(purchase.quantity);
+                        return `<tr><td>${new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(purchase.purchasedAt))}</td><td class="item-name">${escapeHtml(purchase.name)}</td><td class="category">${escapeHtml(purchase.category || 'Uncategorized')}</td><td>${purchase.quantity}</td><td>${formatCurrency(unitPrice)}</td><td>${formatCurrency(total)}</td></tr>`;
+                    }).join('');
+                }
+                if ($('#purchase-empty-state')) $('#purchase-empty-state').hidden = purchases.length > 0;
+                const posItem = $('#pos-item');
+                if (posItem) {
+                    const selected = posItem.value;
+                    posItem.innerHTML = '<option value="">Choose a drink or bite</option>' + inventory.filter((item) => item.quantity > 0).map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)} · ${formatCurrency(itemPrice(item))} (${item.quantity} available)</option>`).join('');
+                    if (inventory.some((item) => item.id === selected && item.quantity > 0)) posItem.value = selected;
+                    updatePosAvailability();
+                }
+                const rows = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${item.quantity}</td><td><span class="pill ${item.quantity <= 5 ? 'low' : ''}">${item.quantity <= 5 ? 'Running low' : 'In stock'}</span></td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
+                if ($('#inventory-table')) $('#inventory-table').innerHTML = rows;
+                if ($('#management-table')) $('#management-table').innerHTML = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${item.quantity}</td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
+                if ($('#empty-state')) $('#empty-state').hidden = inventory.length > 0;
+                renderMenu();
+            }
+
+            function updatePosAvailability() {
+                const posItem = $('#pos-item');
+                const selected = posItem ? inventory.find((item) => item.id === posItem.value) : null;
+                const quantity = Number($('#pos-quantity')?.value) || 0;
+                if ($('#pos-available')) $('#pos-available').textContent = selected ? `${selected.quantity} serving${selected.quantity === 1 ? '' : 's'}` : 'Choose a menu item';
+                if ($('#pos-total')) $('#pos-total').textContent = formatCurrency(selected ? itemPrice(selected) * quantity : 0);
+            }
+
+            function renderMenu() {
+                const filter = $('#menu-filter');
+                const grid = $('#menu-grid');
+                if (!filter || !grid) return;
+                const selectedCategory = filter.value;
+                const categories = [...new Set(inventory.map((item) => String(item.category || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+                filter.innerHTML = '<option value="all">Everything</option>' + categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+                filter.value = categories.includes(selectedCategory) ? selectedCategory : 'all';
+                const visibleItems = inventory.filter((item) => filter.value === 'all' || item.category === filter.value);
+                $('#menu-count').textContent = `${inventory.length} item${inventory.length === 1 ? '' : 's'} on the menu`;
+                grid.innerHTML = visibleItems.length ? visibleItems.map((item) => `<article class="menu-card"><div class="menu-card-top"><span>${escapeHtml(item.category || 'Cafe favourite')}</span><span>${item.quantity > 0 ? `${item.quantity} left` : 'Sold out'}</span></div><h2>${escapeHtml(item.name)}</h2><p>${item.quantity > 0 ? 'Freshly made and ready to enjoy.' : 'Back soon — this one has sold out for now.'}</p><div class="menu-card-bottom"><strong class="menu-card-price">${formatCurrency(itemPrice(item))}</strong><button class="button button-primary" type="button" data-sell="${escapeHtml(item.id)}" ${item.quantity < 1 ? 'disabled' : ''}>${item.quantity > 0 ? 'Order' : 'Sold out'}</button></div></article>`).join('') : '<div class="empty-state menu-empty"><h3>No menu items in this category</h3><p>Add a cafe favourite in Stock &amp; menu setup.</p></div>';
+            }
+
+            function showTab(name) {
+                $$('.nav-button').forEach((button) => button.classList.toggle('is-active', button.dataset.tab === name));
+                $$('.tab-panel').forEach((panel) => {
+                    panel.hidden = panel.dataset.panel !== name;
+                    panel.classList.toggle('is-active', !panel.hidden);
+                });
+            }
+
+            function requireAdmin(action) {
+                if (sessionStorage.getItem('steel-asia-admin') === 'unlocked') {
+                    action();
+                    return;
+                }
+                pendingAdminAction = action;
+                $('#admin-modal').hidden = false;
+                $('#admin-password').value = '';
+                $('#admin-message').textContent = '';
+                $('#admin-password').focus();
+            }
+
+            function requestTab(name) {
+                if (name === 'manage' || name === 'purchases' || name === 'storage') {
+                    requireAdmin(() => showTab(name));
+                    return;
+                }
+                showTab(name);
+            }
+
+            function resetForm() {
+                const form = $('#inventory-form');
+                if (form) form.reset();
+                if ($('#item-id')) $('#item-id').value = '';
+                if ($('#form-title')) $('#form-title').textContent = 'Add a menu item';
+                if ($('#save-button')) $('#save-button').textContent = 'Save menu item';
+                if ($('#cancel-button')) $('#cancel-button').hidden = true;
+            }
+
+            function editItem(id) {
+                const item = inventory.find((entry) => entry.id === id);
+                if (!item) return;
+                requireAdmin(() => {
+                    showTab('manage');
+                    $('#item-id').value = item.id;
+                    $('#item-name').value = item.name;
+                    $('#item-category').value = item.category;
+                    $('#item-price').value = itemPrice(item);
+                    $('#item-quantity').value = item.quantity;
+                    $('#form-title').textContent = 'Edit menu item';
+                    $('#save-button').textContent = 'Update menu item';
+                    $('#cancel-button').hidden = false;
+                    $('#item-name').focus();
+                });
+            }
+
+            function deleteItem(id) {
+                const item = inventory.find((entry) => entry.id === id);
+                if (!item || !window.confirm(`Delete ${item.name}?`)) return;
+                requireAdmin(() => {
+                    inventory = inventory.filter((entry) => entry.id !== id);
+                    saveInventory();
+                });
+            }
+            $$('[data-tab]').forEach((button) => button.addEventListener('click', () => requestTab(button.dataset.tab)));
+            const posItem = $('#pos-item');
+            if (posItem) posItem.addEventListener('change', updatePosAvailability);
+            const posQuantity = $('#pos-quantity');
+            if (posQuantity) posQuantity.addEventListener('input', updatePosAvailability);
+            const menuFilter = $('#menu-filter');
+            if (menuFilter) menuFilter.addEventListener('change', renderMenu);
+            const posForm = $('#pos-form');
+            if (posForm) posForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const item = inventory.find((entry) => entry.id === $('#pos-item').value);
+                const quantity = Number($('#pos-quantity').value);
+                const message = $('#pos-message');
+                if (!item) {
+                    message.textContent = 'Select an item before completing the sale.';
+                    return;
+                }
+                if (!Number.isInteger(quantity) || quantity < 1) {
+                    message.textContent = 'Enter a whole quantity of at least 1.';
+                    return;
+                }
+                if (quantity > item.quantity) {
+                    message.textContent = `Only ${item.quantity} unit${item.quantity === 1 ? '' : 's'} available.`;
+                    return;
+                }
+                purchases.unshift({
+                    id: crypto.randomUUID(),
+                    name: item.name,
+                    category: item.category,
+                    unitPrice: itemPrice(item),
+                    total: itemPrice(item) * quantity,
+                    quantity,
+                    purchasedAt: new Date().toISOString()
+                });
+                savePurchases();
+                item.quantity -= quantity;
+                item.updatedAt = new Date().toISOString();
+                saveInventory();
+                message.textContent = `Order complete: ${quantity} × ${item.name} · ${formatCurrency(itemPrice(item) * quantity)}.`;
+                $('#pos-quantity').value = 1;
+                updatePosAvailability();
+            });
+            const inventoryForm = $('#inventory-form');
+            if (inventoryForm) inventoryForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const id = $('#item-id').value;
+                const record = {
+                    id: id || crypto.randomUUID(),
+                    name: $('#item-name').value.trim(),
+                    category: $('#item-category').value.trim(),
+                    price: Number($('#item-price').value),
+                    quantity: Number($('#item-quantity').value),
+                    updatedAt: new Date().toISOString()
+                };
+                if (!record.name || !Number.isFinite(record.price) || record.price < 0 || !Number.isInteger(record.quantity) || record.quantity < 0) return;
+                inventory = id ? inventory.map((item) => item.id === id ? record : item) : [record, ...inventory];
+                saveInventory();
+                resetForm();
+                $('#form-message').textContent = id ? 'Menu item updated.' : 'Menu item added.';
+            });
+            const cancelButton = $('#cancel-button');
+            if (cancelButton) cancelButton.addEventListener('click', resetForm);
+            document.addEventListener('click', (event) => {
+                const edit = event.target.closest('[data-edit]'),
+                    remove = event.target.closest('[data-delete]'),
+                    sell = event.target.closest('[data-sell]');
+                if (edit) editItem(edit.dataset.edit);
+                if (remove) deleteItem(remove.dataset.delete);
+                if (sell) {
+                    const item = inventory.find((entry) => entry.id === sell.dataset.sell);
+                    if (item && item.quantity > 0) {
+                        $('#pos-item').value = item.id;
+                        $('#pos-quantity').value = 1;
+                        updatePosAvailability();
+                        requestTab('home');
+                        $('#pos-quantity').focus();
+                    }
+                }
+            });
+            const exportButton = $('#export-button');
+            if (exportButton) exportButton.addEventListener('click', () => {
+                const content = inventory.map((item) => `Item: ${item.name}\nCategory: ${item.category || 'Uncategorized'}\nPrice: ${itemPrice(item)}\nQuantity: ${item.quantity}\nUpdated: ${item.updatedAt}\n---`).join('\n');
+                const blob = new Blob([content || 'No cafe menu records.'], {
+                    type: 'text/plain'
+                });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'cozea-cafe-menu.txt';
+                link.click();
+                URL.revokeObjectURL(link.href);
+            });
+            const importFile = $('#import-file');
+            if (importFile) importFile.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const imported = String(reader.result).split('\n---').map((block) => {
+                        const lines = block.split('\n');
+                        const nameLine = lines.find((line) => line.startsWith('Item: '));
+                        const categoryLine = lines.find((line) => line.startsWith('Category: '));
+                        const priceLine = lines.find((line) => line.startsWith('Price: '));
+                        const quantityLine = lines.find((line) => line.startsWith('Quantity: '));
+                        const name = nameLine ? nameLine.slice(6).trim() : '';
+                        const category = categoryLine ? categoryLine.slice(10).trim() : '';
+                        const price = Number(priceLine ? priceLine.slice(7) : 0);
+                        const quantity = Number(quantityLine ? quantityLine.slice(10) : '');
+                        return name && Number.isFinite(price) && price >= 0 && Number.isInteger(quantity) && quantity >= 0 ? {
+                            id: crypto.randomUUID(),
+                            name,
+                            category,
+                            price,
+                            quantity,
+                            updatedAt: new Date().toISOString()
+                        } : null;
+                    }).filter(Boolean);
+                    if (!imported.length) {
+                        $('#storage-message').textContent = 'No valid records found.';
+                        return;
+                    }
+                    inventory = imported;
+                    saveInventory();
+                    $('#storage-message').textContent = `${imported.length} record${imported.length === 1 ? '' : 's'} imported.`;
+                };
+                reader.readAsText(file);
+            });
+            const clearButton = $('#clear-button');
+            if (clearButton) clearButton.addEventListener('click', () => {
+                if (inventory.length && window.confirm('Clear all inventory records?')) {
+                    inventory = [];
+                    saveInventory();
+                }
+            });
+            const adminForm = $('#admin-form');
+            if (adminForm) adminForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                if ($('#admin-password').value !== adminPassword) {
+                    $('#admin-message').textContent = 'Incorrect admin password.';
+                    $('#admin-password').select();
+                    return;
+                }
+                sessionStorage.setItem('steel-asia-admin', 'unlocked');
+                $('#admin-modal').hidden = true;
+                const action = pendingAdminAction;
+                pendingAdminAction = null;
+                if (action) action();
+            });
+            const closeAdmin = () => {
+                $('#admin-modal').hidden = true;
+                pendingAdminAction = null;
+            };
+            $('#admin-close').addEventListener('click', closeAdmin);
+            $('#admin-cancel').addEventListener('click', closeAdmin);
+            if ($('#today')) $('#today').textContent = new Intl.DateTimeFormat('en', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            }).format(new Date());
+            render();
+        })();
+    </script>
+</body>
+
+</html>
