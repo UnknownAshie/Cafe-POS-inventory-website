@@ -1029,7 +1029,12 @@
                     <h1>Sales &amp; orders</h1>
                     <p class="lede">Every completed order, kept close at hand.</p>
                 </div>
+                <div class="form-actions">
+                    <button class="button button-primary" type="button" id="export-order-history-button">Save order history</button>
+                    <button class="button button-quiet" type="button" id="clear-order-history-button">Clear history</button>
+                </div>
             </div>
+            <p class="form-message" id="order-history-message" role="status" aria-live="polite"></p>
             <div class="metrics purchase-metrics">
                 <article class="metric"><span>Orders completed</span><strong id="purchase-count">0</strong></article>
                 <article class="metric metric-accent"><span>Items sold</span><strong id="purchased-unit-count">0</strong></article>
@@ -1357,14 +1362,14 @@
                 if ($('#dashboard-order-count')) $('#dashboard-order-count').textContent = purchases.length;
                 if ($('#purchase-record-count')) $('#purchase-record-count').textContent = `${purchases.length} record${purchases.length === 1 ? '' : 's'}`;
                 if ($('#sales-revenue')) {
-                    const totalSales = purchases.reduce((sum, purchase) => sum + (Number(purchase.total) || (Number(purchase.unitPrice ? ? purchase.price) || 0) * Number(purchase.quantity || 0)), 0);
+                    const totalSales = purchases.reduce((sum, purchase) => sum + (Number(purchase.total) || (Number(purchase.unitPrice ?? purchase.price) || 0) * Number(purchase.quantity || 0)), 0);
                     $('#sales-revenue').textContent = formatCurrency(totalSales);
                     if ($('#dashboard-sales-total')) $('#dashboard-sales-total').textContent = formatCurrency(totalSales);
                 }
 
                 if ($('#purchase-table')) {
                     $('#purchase-table').innerHTML = purchases.map((purchase) => {
-                        const unitPrice = Number(purchase.unitPrice ? ? purchase.price) || 0;
+                        const unitPrice = Number(purchase.unitPrice ?? purchase.price) || 0;
                         const total = Number(purchase.total) || unitPrice * Number(purchase.quantity || 0);
                         return `<tr><td>${new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(purchase.purchasedAt))}</td><td class="item-name">${escapeHtml(purchase.name)}</td><td class="category">${escapeHtml(purchase.category || 'Uncategorized')}</td><td>${purchase.quantity}</td><td>${formatCurrency(unitPrice)}</td><td>${formatCurrency(total)}</td></tr>`;
                     }).join('');
@@ -1390,7 +1395,7 @@
             function updatePosSummary() {
                 const posItem = $('#pos-item');
                 const selected = posItem ? inventory.find((item) => item.id === posItem.value) : null;
-                const qty = Number($('#pos-quantity') ? .value) || 0;
+                const qty = Number($('#pos-quantity')?.value) || 0;
                 if ($('#pos-total')) $('#pos-total').textContent = formatCurrency(selected ? itemPrice(selected) * qty : 0);
             }
 
@@ -1606,6 +1611,69 @@
                 link.download = 'cozea-cafe-menu.txt';
                 link.click();
                 URL.revokeObjectURL(link.href);
+            });
+
+            const exportOrderHistoryButton = $('#export-order-history-button');
+            if (exportOrderHistoryButton) exportOrderHistoryButton.addEventListener('click', () => {
+                requireAdmin(() => {
+                    const content = purchases.map((purchase) => {
+                        const unitPrice = Number(purchase.unitPrice ?? purchase.price) || 0;
+                        const quantity = Number(purchase.quantity) || 0;
+                        const total = Number(purchase.total) || unitPrice * quantity;
+                        const purchasedAt = new Intl.DateTimeFormat('en', {
+                            dateStyle: 'medium',
+                            timeStyle: 'short'
+                        }).format(new Date(purchase.purchasedAt));
+                        return [
+                            `Date: ${purchasedAt}`,
+                            `Item: ${purchase.name}`,
+                            `Category: ${purchase.category || 'Uncategorized'}`,
+                            `Quantity: ${quantity}`,
+                            `Each: ${formatCurrency(unitPrice)}`,
+                            `Total: ${formatCurrency(total)}`,
+                            '---'
+                        ].join('\n');
+                    }).join('\n');
+                    const totalSales = purchases.reduce((sum, purchase) => {
+                        const unitPrice = Number(purchase.unitPrice ?? purchase.price) || 0;
+                        return sum + (Number(purchase.total) || unitPrice * Number(purchase.quantity || 0));
+                    }, 0);
+                    const fileContent = [
+                        'Cozea Cafe Order History',
+                        `Orders: ${purchases.length}`,
+                        `Items sold: ${purchases.reduce((sum, purchase) => sum + Number(purchase.quantity || 0), 0)}`,
+                        `Sales recorded: ${formatCurrency(totalSales)}`,
+                        '',
+                        content || 'No order history.'
+                    ].join('\n');
+                    const blob = new Blob([fileContent], {
+                        type: 'text/plain'
+                    });
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'cozea-cafe-order-history.txt';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+                    $('#order-history-message').textContent = 'Order history saved as a text file.';
+                });
+            });
+
+            const clearOrderHistoryButton = $('#clear-order-history-button');
+            if (clearOrderHistoryButton) clearOrderHistoryButton.addEventListener('click', () => {
+                requireAdmin(() => {
+                    if (!purchases.length) {
+                        $('#order-history-message').textContent = 'There is no order history to clear.';
+                        return;
+                    }
+                    if (!window.confirm('Clear all order history? This cannot be undone.')) return;
+                    purchases = [];
+                    savePurchases();
+                    render();
+                    $('#order-history-message').textContent = 'Order history cleared.';
+                });
             });
 
             const importFile = $('#import-file');
