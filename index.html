@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cozea Cafe | Cafe POS &amp; Inventory</title>
-    <meta name="description" content="Cozea Cafe point of sale, menu, and inventory workspace.">
+    <title>12:51 Cafe | Cafe POS &amp; Inventory</title>
+    <meta name="description" content="12:51 Cafe point of sale, menu, and inventory workspace.">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;700;800&display=swap');
          :root {
@@ -32,7 +32,7 @@
         
         button,
         input {
-            font: inherit
+            s font: inherit
         }
         
         button {
@@ -661,24 +661,24 @@
             margin-top: 3px;
             font-size: 26px
         }
-
+        
         .pos-availability .order-total {
             margin-top: 13px;
             color: #e8b990
         }
-
+        
         .menu-toolbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: -12px 0 22px
         }
-
+        
         .menu-toolbar label {
             display: inline;
             margin: 0 10px 0 0
         }
-
+        
         .menu-toolbar select {
             border: 1px solid var(--line);
             padding: 10px 12px;
@@ -686,13 +686,99 @@
             color: var(--ink);
             font: inherit
         }
-
+        
+        .menu-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.9fr);
+            gap: 22px;
+            align-items: start
+        }
+        
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px
         }
-
+        
+        .cart-panel {
+            position: sticky;
+            top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: #fff;
+            padding: 22px;
+            box-shadow: var(--shadow)
+        }
+        
+        .cart-panel h2 {
+            margin: 0;
+            font-size: 24px
+        }
+        
+        .cart-panel p {
+            margin: 0;
+            color: var(--muted)
+        }
+        
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 110px
+        }
+        
+        .receipt-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 10px;
+            align-items: center;
+            padding: 12px 10px;
+            background: #f8f4f0;
+            border: 1px solid var(--line)
+        }
+        
+        .receipt-item strong {
+            display: block;
+            margin-bottom: 3px
+        }
+        
+        .receipt-item small {
+            color: var(--muted)
+        }
+        
+        .qty-stepper {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+        
+        .qty-stepper button {
+            width: 26px;
+            height: 26px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink)
+        }
+        
+        .cart-totals {
+            border-top: 1px solid var(--line);
+            padding-top: 16px
+        }
+        
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-weight: 800;
+            font-size: 20px
+        }
+        
+        .cart-panel .button {
+            width: 100%
+        }
+        
         .menu-card {
             display: flex;
             flex-direction: column;
@@ -702,7 +788,7 @@
             box-shadow: var(--shadow);
             border-top: 3px solid var(--coral)
         }
-
+        
         .menu-card-top {
             display: flex;
             justify-content: space-between;
@@ -711,18 +797,18 @@
             font: 11px 'DM Mono', monospace;
             text-transform: uppercase
         }
-
+        
         .menu-card h2 {
             margin: 24px 0 5px;
             font-size: 21px
         }
-
+        
         .menu-card p {
             margin-bottom: 20px;
             color: var(--muted);
             font-size: 13px
         }
-
+        
         .menu-card-bottom {
             display: flex;
             align-items: center;
@@ -730,16 +816,16 @@
             gap: 10px;
             margin-top: auto
         }
-
+        
         .menu-card-price {
             font-size: 19px;
             font-weight: 800
         }
-
+        
         .menu-card .button {
             padding: 9px 12px
         }
-
+        
         .menu-empty {
             grid-column: 1 / -1
         }
@@ -842,24 +928,24 @@
 
 <body>
     <header class="site-header">
-        <div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">CC</span><span>Cozea Cafe<small>Counter &amp; pantry</small></span></a>
+        <div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">CC</span><span>12:51 Cafe<small>Counter &amp; menu</small></span></a>
             <div class="header-note"><span class="status-dot"></span> Cafe is open · Local workspace</div>
         </div>
-        <nav class="navbar" aria-label="Main navigation"><button class="nav-button is-active" type="button" data-tab="home">Dashboard <span>Today's service</span></button><button class="nav-button" type="button" data-tab="menu">Cafe menu <span>Drinks &amp; bites</span></button><button class="nav-button" type="button" data-tab="purchases">Sales <span>Order history</span></button><button class="nav-button"
-                type="button" data-tab="manage">Stock &amp; menu</button><button class="nav-button" type="button" data-tab="storage">Backup <span>Import / export</span></button></nav>
+        <nav class="navbar" aria-label="Main navigation"><button class="nav-button is-active" type="button" data-tab="home">Dashboard <span>Today's service</span></button><button class="nav-button" type="button" data-tab="menu">Cafe menu <span>Drinks &amp; bites</span></button><button class="nav-button"
+                type="button" data-tab="purchases">Sales <span>Order history</span></button><button class="nav-button" type="button" data-tab="manage">Menu setup</button><button class="nav-button" type="button" data-tab="storage">Backup <span>Import / export</span></button></nav>
     </header>
     <main class="page-shell">
         <section class="tab-panel is-active" data-panel="home">
             <div class="page-heading">
                 <div>
-                    <p class="eyebrow">Cozea Cafe / <span id="today"></span></p>
+                    <p class="eyebrow">12:51 Cafe / <span id="today"></span></p>
                     <h1>Good day. Ready to serve?</h1>
-                    <p class="lede">Your counter, menu, and pantry stock at a glance.</p>
+                    <p class="lede">Your counter, menu, and sales at a glance.</p>
                 </div><button class="button button-primary" type="button" data-tab="menu">Browse cafe menu</button></div>
             <div class="metrics">
                 <article class="metric"><span>Menu items</span><strong id="item-count">0</strong></article>
-                <article class="metric"><span>Servings in stock</span><strong id="unit-count">0</strong></article>
-                <article class="metric metric-accent"><span>Running low</span><strong id="low-stock-count">0</strong><small>5 servings or fewer</small></article>
+                <article class="metric"><span>Orders completed</span><strong id="dashboard-order-count">0</strong></article>
+                <article class="metric metric-accent"><span>Sales recorded</span><strong id="dashboard-sales-total">₱0.00</strong></article>
             </div>
             <section class="pos-card" aria-labelledby="pos-title">
                 <div>
@@ -876,13 +962,13 @@
                         <p class="pos-message" id="pos-message" role="status"></p>
                     </form>
                 </div>
-                <div class="pos-availability"><span>Available today</span><strong id="pos-available">Choose a menu item</strong><span class="order-total">Order total</span><strong id="pos-total">₱0.00</strong></div>
+                <div class="pos-availability"><span class="order-total">Order total</span><strong id="pos-total">₱0.00</strong></div>
             </section>
             <div class="table-card">
                 <div class="card-heading">
                     <div>
-                        <h2>Pantry &amp; counter stock</h2>
-                        <p>Stock counts update as each order is completed.</p>
+                        <h2>Cafe menu</h2>
+                        <p>Menu items and prices currently offered.</p>
                     </div><span class="record-count" id="record-count">0 records</span></div>
                 <div class="table-wrap">
                     <table>
@@ -891,8 +977,6 @@
                                 <th>Item</th>
                                 <th>Category</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Status</th>
                                 <th>Last updated</th>
                                 <th>Actions</th>
                             </tr>
@@ -909,13 +993,34 @@
         <section class="tab-panel" data-panel="menu" hidden>
             <div class="page-heading">
                 <div>
-                    <p class="eyebrow">Cozea Cafe / <span>Made with care</span></p>
+                    <p class="eyebrow">12:51 Cafe / <span>Made with care</span></p>
                     <h1>Something good is brewing.</h1>
-                    <p class="lede">Explore today's drinks and little treats. Add an item to start an order.</p>
+                    <p class="lede">Explore today's drinks and little treats. Build a quick order and finish it at the counter.</p>
                 </div><button class="button button-primary" type="button" data-tab="manage">+ Add menu item</button>
             </div>
-            <div class="menu-toolbar"><span class="record-count" id="menu-count">0 items on the menu</span><div><label for="menu-filter">Show</label><select id="menu-filter"><option value="all">Everything</option></select></div></div>
-            <div class="menu-grid" id="menu-grid"></div>
+            <div class="menu-layout">
+                <div>
+                    <div class="menu-toolbar"><span class="record-count" id="menu-count">0 items on the menu</span>
+                        <div><label for="menu-filter">Show</label><select id="menu-filter"><option value="all">Everything</option></select></div>
+                    </div>
+                    <div class="menu-grid" id="menu-grid"></div>
+                </div>
+                <aside class="cart-panel">
+                    <div>
+                        <p class="eyebrow">Receipt</p>
+                        <h2>Order summary</h2>
+                    </div>
+                    <div class="cart-items" id="cart-items">
+                        <p>No items selected yet.</p>
+                    </div>
+                    <div class="cart-totals">
+                        <div class="cart-total-row"><span>Subtotal</span><strong id="cart-subtotal">₱0.00</strong></div>
+                        <div class="cart-total-row"><span>Total</span><strong id="cart-total">₱0.00</strong></div>
+                    </div>
+                    <button class="button button-primary" id="checkout-button" type="button" disabled>Complete order</button>
+                    <p id="cart-status">Start by choosing items from the menu.</p>
+                </aside>
+            </div>
         </section>
         <section class="tab-panel" data-panel="purchases" hidden>
             <div class="page-heading">
@@ -927,7 +1032,7 @@
             </div>
             <div class="metrics purchase-metrics">
                 <article class="metric"><span>Orders completed</span><strong id="purchase-count">0</strong></article>
-                <article class="metric metric-accent"><span>Servings sold</span><strong id="purchased-unit-count">0</strong></article>
+                <article class="metric metric-accent"><span>Items sold</span><strong id="purchased-unit-count">0</strong></article>
                 <article class="metric"><span>Sales recorded</span><strong id="sales-revenue">₱0.00</strong></article>
             </div>
             <div class="table-card">
@@ -962,8 +1067,8 @@
             <div class="page-heading">
                 <div>
                     <p class="eyebrow">Cozea Cafe / <span>Back of house</span></p>
-                    <h1>Stock &amp; menu setup</h1>
-                    <p class="lede">Keep menu prices and available servings up to date.</p>
+                    <h1>Menu setup</h1>
+                    <p class="lede">Keep your cafe menu and prices up to date.</p>
                 </div>
             </div>
             <div class="manage-grid">
@@ -971,22 +1076,23 @@
                     <div class="card-heading">
                         <div>
                             <h2 id="form-title">Add a menu item</h2>
-                            <p>Give each cafe favourite a price and starting stock.</p>
+                            <p>Give each cafe favourite a name, category, and price.</p>
                         </div>
                     </div><input type="hidden" id="item-id"><label for="item-name">Menu item <span>Required</span></label><input id="item-name" type="text" placeholder="e.g. Flat white" required maxlength="80"><label for="item-category">Category</label>
-                    <input id="item-category" type="text" placeholder="e.g. Coffee, Tea, Pastry" maxlength="50"><label for="item-price">Price (PHP) <span>Required</span></label><input id="item-price" type="number" min="0" step="0.01" placeholder="0.00" required><label for="item-quantity">Servings in stock <span>Required</span></label><input id="item-quantity" type="number" min="0" step="1" placeholder="0" required>
+                    <input id="item-category" type="text" placeholder="e.g. Coffee, Tea, Pastry" maxlength="50"><label for="item-price">Price (PHP) <span>Required</span></label><input id="item-price" type="number" min="0" step="0.01" placeholder="0.00"
+                        required>
                     <div class="form-actions"><button class="button button-primary" type="submit" id="save-button">Save menu item</button><button class="button button-quiet" type="button" id="cancel-button" hidden>Cancel edit</button></div>
                     <p class="form-message" id="form-message" role="status"></p>
                 </form>
                 <aside class="tip-card"><span class="tip-label">Quick note</span>
                     <h2>Good coffee. Good records.</h2>
-                    <p>Your menu, stock, and order history stay in this browser. Save a backup from the storage tab.</p><button class="text-link" type="button" data-tab="storage">Open backup tools <span>-></span></button></aside>
+                    <p>Your menu and order history stay in this browser. Save a backup from the storage tab.</p><button class="text-link" type="button" data-tab="storage">Open backup tools <span>-></span></button></aside>
             </div>
             <div class="table-card management-table">
                 <div class="card-heading">
                     <div>
-                        <h2>Menu &amp; stock records</h2>
-                        <p>Edit prices or adjust servings whenever you need.</p>
+                        <h2>Menu items</h2>
+                        <p>Edit menu details or prices whenever you need.</p>
                     </div>
                 </div>
                 <div class="table-wrap">
@@ -996,7 +1102,6 @@
                                 <th>Item</th>
                                 <th>Category</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
                                 <th>Updated</th>
                                 <th>Actions</th>
                             </tr>
@@ -1011,20 +1116,20 @@
                 <div>
                     <p class="eyebrow">Cozea Cafe / <span>Keep it safe</span></p>
                     <h1>Backup your cafe data</h1>
-                    <p class="lede">Take your menu, prices, and stock with you in a simple text file.</p>
+                    <p class="lede">Take your menu and prices with you in a simple text file.</p>
                 </div>
             </div>
             <div class="storage-grid">
                 <article class="storage-card"><span class="storage-number">01</span>
                     <h2>Export cafe menu</h2>
-                    <p>Download menu items, prices, and servings as a readable <strong>.txt</strong> file.</p><button class="button button-primary" type="button" id="export-button">Download cafe backup</button></article>
+                    <p>Download menu items and prices as a readable <strong>.txt</strong> file.</p><button class="button button-primary" type="button" id="export-button">Download cafe backup</button></article>
                 <article class="storage-card"><span class="storage-number">02</span>
                     <h2>Import cafe menu</h2>
-                    <p>Load a previously exported file. Imported records replace the current menu and stock.</p><label class="button button-secondary file-button" for="import-file">Choose .txt file</label><input id="import-file" type="file" accept=".txt,text/plain">
+                    <p>Load a previously exported file. Imported records replace the current menu.</p><label class="button button-secondary file-button" for="import-file">Choose .txt file</label><input id="import-file" type="file" accept=".txt,text/plain">
                     <p class="form-message" id="storage-message" role="status"></p>
                 </article>
             </div>
-            <div class="storage-note"><strong>Local-first storage</strong><span id="storage-summary">0 records currently saved in this browser.</span><button class="text-link danger-link" type="button" id="clear-button">Clear all menu &amp; stock</button></div>
+            <div class="storage-note"><strong>Local-first storage</strong><span id="storage-summary">0 records currently saved in this browser.</span><button class="text-link danger-link" type="button" id="clear-button">Clear all menu items</button></div>
         </section>
     </main>
     <div class="admin-modal" id="admin-modal" hidden>
@@ -1039,14 +1144,16 @@
             <div class="admin-actions"><button class="button button-primary" type="submit">Unlock</button><button class="button button-quiet" id="admin-cancel" type="button">Cancel</button></div>
         </form>
     </div>
-    <footer><span>Cozea Cafe · Counter &amp; pantry</span><span>Made for your daily brew · Local data only</span></footer>
+    <footer><span>Cozea Cafe · Counter &amp; menu</span><span>Made for your daily brew · Local data only</span></footer>
     <script>
         (() => {
             const storageKey = 'admin';
             const purchaseStorageKey = 'steel-asia-purchases';
             const adminPassword = 'admin123';
+            const cartStorageKey = 'cafe-cart';
             let inventory = readInventory();
             let purchases = readPurchases();
+            let cart = readCart();
             let pendingAdminAction = null;
             const $ = (selector) => document.querySelector(selector);
             const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -1061,49 +1168,49 @@
                             name: 'Cappuccino',
                             category: 'Coffee',
                             price: 155,
-                            quantity: 18,
                             updatedAt: now
                         }, {
                             id: 'cafe-flat-white',
                             name: 'Flat white',
                             category: 'Coffee',
                             price: 165,
-                            quantity: 16,
                             updatedAt: now
                         }, {
                             id: 'cafe-spanish-latte',
                             name: 'Spanish latte',
                             category: 'Coffee',
                             price: 185,
-                            quantity: 14,
                             updatedAt: now
                         }, {
                             id: 'cafe-matcha',
                             name: 'Iced matcha latte',
                             category: 'Tea & matcha',
                             price: 195,
-                            quantity: 12,
                             updatedAt: now
                         }, {
                             id: 'cafe-cold-brew',
                             name: 'Cold brew',
                             category: 'Coffee',
                             price: 175,
-                            quantity: 15,
                             updatedAt: now
                         }, {
                             id: 'cafe-croissant',
                             name: 'Butter croissant',
                             category: 'Bakery',
                             price: 120,
-                            quantity: 10,
                             updatedAt: now
                         }];
                         localStorage.setItem(storageKey, JSON.stringify(starterMenu));
                         return starterMenu;
                     }
                     const items = JSON.parse(saved);
-                    return Array.isArray(items) ? items : [];
+                    if (!Array.isArray(items)) return [];
+                    const menuItems = items.map(({
+                        quantity,
+                        ...item
+                    }) => item);
+                    localStorage.setItem(storageKey, JSON.stringify(menuItems));
+                    return menuItems;
                 } catch (error) {
                     console.error('Unable to read or initialize cafe inventory.', error);
                     return [];
@@ -1120,6 +1227,16 @@
                 }
             }
 
+            function readCart() {
+                try {
+                    const saved = sessionStorage.getItem(cartStorageKey);
+                    return saved ? JSON.parse(saved) : [];
+                } catch (error) {
+                    console.error('Unable to read cart.', error);
+                    return [];
+                }
+            }
+
             function saveInventory() {
                 localStorage.setItem(storageKey, JSON.stringify(inventory));
                 render();
@@ -1127,6 +1244,11 @@
 
             function savePurchases() {
                 localStorage.setItem(purchaseStorageKey, JSON.stringify(purchases));
+            }
+
+            function saveCart() {
+                sessionStorage.setItem(cartStorageKey, JSON.stringify(cart));
+                renderCart();
             }
 
             function formatDate(value) {
@@ -1150,56 +1272,52 @@
             }
 
             function escapeHtml(value) {
-                return String(value).replace(/[&<>'"]/g, (char) => ({
+                return String(value).replace(/[&<>\"']/g, (char) => ({
                     '&': '&amp;',
                     '<': '&lt;',
                     '>': '&gt;',
-                    "'": '&#039;',
-                    '"': '&quot;'
+                    '"': '&quot;',
+                    "'": '&#039;'
                 }[char]));
             }
 
-            function render() {
-                const units = inventory.reduce((sum, item) => sum + item.quantity, 0),
-                    low = inventory.filter((item) => item.quantity <= 5).length;
-                if ($('#item-count')) $('#item-count').textContent = inventory.length;
-                if ($('#unit-count')) $('#unit-count').textContent = units;
-                if ($('#low-stock-count')) $('#low-stock-count').textContent = low;
-                if ($('#record-count')) $('#record-count').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'}`;
-                if ($('#storage-summary')) $('#storage-summary').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'} currently saved in this browser.`;
-                const purchasedUnits = purchases.reduce((sum, purchase) => sum + purchase.quantity, 0);
-                if ($('#purchase-count')) $('#purchase-count').textContent = purchases.length;
-                if ($('#purchased-unit-count')) $('#purchased-unit-count').textContent = purchasedUnits;
-                if ($('#purchase-record-count')) $('#purchase-record-count').textContent = `${purchases.length} record${purchases.length === 1 ? '' : 's'}`;
-                if ($('#sales-revenue')) $('#sales-revenue').textContent = formatCurrency(purchases.reduce((sum, purchase) => sum + (Number(purchase.total) || (Number(purchase.unitPrice ?? purchase.price) || 0) * Number(purchase.quantity)), 0));
-                if ($('#purchase-table')) {
-                    $('#purchase-table').innerHTML = purchases.map((purchase) => {
-                        const unitPrice = Number(purchase.unitPrice ?? purchase.price) || 0;
-                        const total = Number(purchase.total) || unitPrice * Number(purchase.quantity);
-                        return `<tr><td>${new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(purchase.purchasedAt))}</td><td class="item-name">${escapeHtml(purchase.name)}</td><td class="category">${escapeHtml(purchase.category || 'Uncategorized')}</td><td>${purchase.quantity}</td><td>${formatCurrency(unitPrice)}</td><td>${formatCurrency(total)}</td></tr>`;
-                    }).join('');
-                }
-                if ($('#purchase-empty-state')) $('#purchase-empty-state').hidden = purchases.length > 0;
-                const posItem = $('#pos-item');
-                if (posItem) {
-                    const selected = posItem.value;
-                    posItem.innerHTML = '<option value="">Choose a drink or bite</option>' + inventory.filter((item) => item.quantity > 0).map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)} · ${formatCurrency(itemPrice(item))} (${item.quantity} available)</option>`).join('');
-                    if (inventory.some((item) => item.id === selected && item.quantity > 0)) posItem.value = selected;
-                    updatePosAvailability();
-                }
-                const rows = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${item.quantity}</td><td><span class="pill ${item.quantity <= 5 ? 'low' : ''}">${item.quantity <= 5 ? 'Running low' : 'In stock'}</span></td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
-                if ($('#inventory-table')) $('#inventory-table').innerHTML = rows;
-                if ($('#management-table')) $('#management-table').innerHTML = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${item.quantity}</td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
-                if ($('#empty-state')) $('#empty-state').hidden = inventory.length > 0;
-                renderMenu();
-            }
+            function renderCart() {
+                const itemsEl = $('#cart-items');
+                const subtotalEl = $('#cart-subtotal');
+                const totalEl = $('#cart-total');
+                const checkoutButton = $('#checkout-button');
+                const statusEl = $('#cart-status');
+                if (!itemsEl || !subtotalEl || !totalEl || !checkoutButton || !statusEl) return;
 
-            function updatePosAvailability() {
-                const posItem = $('#pos-item');
-                const selected = posItem ? inventory.find((item) => item.id === posItem.value) : null;
-                const quantity = Number($('#pos-quantity')?.value) || 0;
-                if ($('#pos-available')) $('#pos-available').textContent = selected ? `${selected.quantity} serving${selected.quantity === 1 ? '' : 's'}` : 'Choose a menu item';
-                if ($('#pos-total')) $('#pos-total').textContent = formatCurrency(selected ? itemPrice(selected) * quantity : 0);
+                if (!cart.length) {
+                    itemsEl.innerHTML = '<p>No items selected yet.</p>';
+                    subtotalEl.textContent = formatCurrency(0);
+                    totalEl.textContent = formatCurrency(0);
+                    checkoutButton.disabled = true;
+                    statusEl.textContent = 'Start by choosing items from the menu.';
+                    return;
+                }
+
+                const subtotal = cart.reduce((sum, entry) => sum + (Number(entry.price) * Number(entry.quantity)), 0);
+                itemsEl.innerHTML = cart.map((entry) => `
+                    <div class="receipt-item">
+                        <div>
+                            <strong>${escapeHtml(entry.name)}</strong>
+                            <small>${formatCurrency(Number(entry.price))}</small>
+                        </div>
+                        <div class="qty-stepper">
+                            <button type="button" data-cart-sub="${escapeHtml(entry.id)}" aria-label="Decrease quantity">-</button>
+                            <span>${entry.quantity}</span>
+                            <button type="button" data-cart-add="${escapeHtml(entry.id)}" aria-label="Increase quantity">+</button>
+                        </div>
+                        <button type="button" class="row-action delete" data-cart-remove="${escapeHtml(entry.id)}">Remove</button>
+                    </div>
+                `).join('');
+
+                subtotalEl.textContent = formatCurrency(subtotal);
+                totalEl.textContent = formatCurrency(subtotal);
+                checkoutButton.disabled = false;
+                statusEl.textContent = `${cart.length} item(s) ready for checkout.`;
             }
 
             function renderMenu() {
@@ -1212,7 +1330,68 @@
                 filter.value = categories.includes(selectedCategory) ? selectedCategory : 'all';
                 const visibleItems = inventory.filter((item) => filter.value === 'all' || item.category === filter.value);
                 $('#menu-count').textContent = `${inventory.length} item${inventory.length === 1 ? '' : 's'} on the menu`;
-                grid.innerHTML = visibleItems.length ? visibleItems.map((item) => `<article class="menu-card"><div class="menu-card-top"><span>${escapeHtml(item.category || 'Cafe favourite')}</span><span>${item.quantity > 0 ? `${item.quantity} left` : 'Sold out'}</span></div><h2>${escapeHtml(item.name)}</h2><p>${item.quantity > 0 ? 'Freshly made and ready to enjoy.' : 'Back soon — this one has sold out for now.'}</p><div class="menu-card-bottom"><strong class="menu-card-price">${formatCurrency(itemPrice(item))}</strong><button class="button button-primary" type="button" data-sell="${escapeHtml(item.id)}" ${item.quantity < 1 ? 'disabled' : ''}>${item.quantity > 0 ? 'Order' : 'Sold out'}</button></div></article>`).join('') : '<div class="empty-state menu-empty"><h3>No menu items in this category</h3><p>Add a cafe favourite in Stock &amp; menu setup.</p></div>';
+
+                grid.innerHTML = visibleItems.length ? visibleItems.map((item) => `
+                        <article class="menu-card">
+                            <div class="menu-card-top">
+                                <span>${escapeHtml(item.category || 'Cafe favourite')}</span>
+                            </div>
+                            <h2>${escapeHtml(item.name)}</h2>
+                            <p>Freshly made and ready to enjoy.</p>
+                            <div class="menu-card-bottom">
+                                <strong class="menu-card-price">${formatCurrency(itemPrice(item))}</strong>
+                                <button class="button button-primary" type="button" data-sell="${escapeHtml(item.id)}">Order</button>
+                            </div>
+                        </article>
+                    `).join('') : '<div class="empty-state menu-empty"><h3>No menu items in this category</h3><p>Add a cafe favourite in Menu setup.</p></div>';
+            }
+
+            function render() {
+                if ($('#item-count')) $('#item-count').textContent = inventory.length;
+                if ($('#record-count')) $('#record-count').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'}`;
+                if ($('#storage-summary')) $('#storage-summary').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'} currently saved in this browser.`;
+
+                const purchasedUnits = purchases.reduce((sum, purchase) => sum + Number(purchase.quantity || 0), 0);
+                if ($('#purchase-count')) $('#purchase-count').textContent = purchases.length;
+                if ($('#purchased-unit-count')) $('#purchased-unit-count').textContent = purchasedUnits;
+                if ($('#dashboard-order-count')) $('#dashboard-order-count').textContent = purchases.length;
+                if ($('#purchase-record-count')) $('#purchase-record-count').textContent = `${purchases.length} record${purchases.length === 1 ? '' : 's'}`;
+                if ($('#sales-revenue')) {
+                    const totalSales = purchases.reduce((sum, purchase) => sum + (Number(purchase.total) || (Number(purchase.unitPrice ? ? purchase.price) || 0) * Number(purchase.quantity || 0)), 0);
+                    $('#sales-revenue').textContent = formatCurrency(totalSales);
+                    if ($('#dashboard-sales-total')) $('#dashboard-sales-total').textContent = formatCurrency(totalSales);
+                }
+
+                if ($('#purchase-table')) {
+                    $('#purchase-table').innerHTML = purchases.map((purchase) => {
+                        const unitPrice = Number(purchase.unitPrice ? ? purchase.price) || 0;
+                        const total = Number(purchase.total) || unitPrice * Number(purchase.quantity || 0);
+                        return `<tr><td>${new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(purchase.purchasedAt))}</td><td class="item-name">${escapeHtml(purchase.name)}</td><td class="category">${escapeHtml(purchase.category || 'Uncategorized')}</td><td>${purchase.quantity}</td><td>${formatCurrency(unitPrice)}</td><td>${formatCurrency(total)}</td></tr>`;
+                    }).join('');
+                }
+
+                if ($('#purchase-empty-state')) $('#purchase-empty-state').hidden = purchases.length > 0;
+                const posItem = $('#pos-item');
+                if (posItem) {
+                    const selected = posItem.value;
+                    posItem.innerHTML = '<option value="">Choose a drink or bite</option>' + inventory.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)} · ${formatCurrency(itemPrice(item))}</option>`).join('');
+                    if (inventory.some((item) => item.id === selected)) posItem.value = selected;
+                    updatePosSummary();
+                }
+
+                const rows = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
+                if ($('#inventory-table')) $('#inventory-table').innerHTML = rows;
+                if ($('#management-table')) $('#management-table').innerHTML = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
+                if ($('#empty-state')) $('#empty-state').hidden = inventory.length > 0;
+                renderMenu();
+                renderCart();
+            }
+
+            function updatePosSummary() {
+                const posItem = $('#pos-item');
+                const selected = posItem ? inventory.find((item) => item.id === posItem.value) : null;
+                const qty = Number($('#pos-quantity') ? .value) || 0;
+                if ($('#pos-total')) $('#pos-total').textContent = formatCurrency(selected ? itemPrice(selected) * qty : 0);
             }
 
             function showTab(name) {
@@ -1236,7 +1415,7 @@
             }
 
             function requestTab(name) {
-                if (name === 'manage' || name === 'purchases' || name === 'storage') {
+                if (name === 'home' || name === 'manage' || name === 'purchases' || name === 'storage') {
                     requireAdmin(() => showTab(name));
                     return;
                 }
@@ -1261,7 +1440,6 @@
                     $('#item-name').value = item.name;
                     $('#item-category').value = item.category;
                     $('#item-price').value = itemPrice(item);
-                    $('#item-quantity').value = item.quantity;
                     $('#form-title').textContent = 'Edit menu item';
                     $('#save-button').textContent = 'Update menu item';
                     $('#cancel-button').hidden = false;
@@ -1277,13 +1455,81 @@
                     saveInventory();
                 });
             }
+
+            function addToCart(id) {
+                const item = inventory.find((entry) => entry.id === id);
+                if (!item) return;
+                const existing = cart.find((entry) => entry.id === id);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push({
+                        id: item.id,
+                        name: item.name,
+                        category: item.category,
+                        price: itemPrice(item),
+                        quantity: 1
+                    });
+                }
+                saveCart();
+            }
+
+            function updateCartQuantity(id, delta) {
+                const existing = cart.find((entry) => entry.id === id);
+                if (!existing) return;
+                const next = existing.quantity + delta;
+                if (next <= 0) {
+                    cart = cart.filter((entry) => entry.id !== id);
+                } else {
+                    existing.quantity = next;
+                }
+                saveCart();
+            }
+
+            function removeCartItem(id) {
+                cart = cart.filter((entry) => entry.id !== id);
+                saveCart();
+            }
+
+            function completeOrder() {
+                if (!cart.length) {
+                    return;
+                }
+
+                if (cart.some((entry) => !inventory.some((item) => item.id === entry.id))) {
+                    $('#cart-status').textContent = 'One or more menu items were removed. Please update your cart.';
+                    return;
+                }
+
+                cart.forEach((entry) => {
+                    const item = inventory.find((menuItem) => menuItem.id === entry.id);
+                    purchases.unshift({
+                        id: crypto.randomUUID(),
+                        name: item.name,
+                        category: item.category,
+                        unitPrice: itemPrice(item),
+                        total: itemPrice(item) * entry.quantity,
+                        quantity: entry.quantity,
+                        purchasedAt: new Date().toISOString()
+                    });
+                });
+
+                savePurchases();
+                cart = [];
+                saveCart();
+                $('#cart-status').textContent = 'Order sent to the admin dashboard.';
+            }
+
             $$('[data-tab]').forEach((button) => button.addEventListener('click', () => requestTab(button.dataset.tab)));
             const posItem = $('#pos-item');
-            if (posItem) posItem.addEventListener('change', updatePosAvailability);
+            if (posItem) posItem.addEventListener('change', updatePosSummary);
             const posQuantity = $('#pos-quantity');
-            if (posQuantity) posQuantity.addEventListener('input', updatePosAvailability);
+            if (posQuantity) posQuantity.addEventListener('input', updatePosSummary);
             const menuFilter = $('#menu-filter');
             if (menuFilter) menuFilter.addEventListener('change', renderMenu);
+            const checkoutButton = $('#checkout-button');
+            if (checkoutButton) checkoutButton.addEventListener('click', completeOrder);
+
             const posForm = $('#pos-form');
             if (posForm) posForm.addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -1291,15 +1537,11 @@
                 const quantity = Number($('#pos-quantity').value);
                 const message = $('#pos-message');
                 if (!item) {
-                    message.textContent = 'Select an item before completing the sale.';
+                    message.textContent = 'Select an item before completing the order.';
                     return;
                 }
                 if (!Number.isInteger(quantity) || quantity < 1) {
                     message.textContent = 'Enter a whole quantity of at least 1.';
-                    return;
-                }
-                if (quantity > item.quantity) {
-                    message.textContent = `Only ${item.quantity} unit${item.quantity === 1 ? '' : 's'} available.`;
                     return;
                 }
                 purchases.unshift({
@@ -1312,13 +1554,11 @@
                     purchasedAt: new Date().toISOString()
                 });
                 savePurchases();
-                item.quantity -= quantity;
-                item.updatedAt = new Date().toISOString();
-                saveInventory();
                 message.textContent = `Order complete: ${quantity} × ${item.name} · ${formatCurrency(itemPrice(item) * quantity)}.`;
                 $('#pos-quantity').value = 1;
-                updatePosAvailability();
+                updatePosSummary();
             });
+
             const inventoryForm = $('#inventory-form');
             if (inventoryForm) inventoryForm.addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -1328,37 +1568,36 @@
                     name: $('#item-name').value.trim(),
                     category: $('#item-category').value.trim(),
                     price: Number($('#item-price').value),
-                    quantity: Number($('#item-quantity').value),
                     updatedAt: new Date().toISOString()
                 };
-                if (!record.name || !Number.isFinite(record.price) || record.price < 0 || !Number.isInteger(record.quantity) || record.quantity < 0) return;
+                if (!record.name || !Number.isFinite(record.price) || record.price < 0) return;
                 inventory = id ? inventory.map((item) => item.id === id ? record : item) : [record, ...inventory];
                 saveInventory();
                 resetForm();
                 $('#form-message').textContent = id ? 'Menu item updated.' : 'Menu item added.';
             });
+
             const cancelButton = $('#cancel-button');
             if (cancelButton) cancelButton.addEventListener('click', resetForm);
             document.addEventListener('click', (event) => {
-                const edit = event.target.closest('[data-edit]'),
-                    remove = event.target.closest('[data-delete]'),
-                    sell = event.target.closest('[data-sell]');
+                const edit = event.target.closest('[data-edit]');
+                const remove = event.target.closest('[data-delete]');
+                const sell = event.target.closest('[data-sell]');
+                const add = event.target.closest('[data-cart-add]');
+                const sub = event.target.closest('[data-cart-sub]');
+                const removeCart = event.target.closest('[data-cart-remove]');
+
                 if (edit) editItem(edit.dataset.edit);
                 if (remove) deleteItem(remove.dataset.delete);
-                if (sell) {
-                    const item = inventory.find((entry) => entry.id === sell.dataset.sell);
-                    if (item && item.quantity > 0) {
-                        $('#pos-item').value = item.id;
-                        $('#pos-quantity').value = 1;
-                        updatePosAvailability();
-                        requestTab('home');
-                        $('#pos-quantity').focus();
-                    }
-                }
+                if (sell) addToCart(sell.dataset.sell);
+                if (add) updateCartQuantity(add.dataset.cartAdd, 1);
+                if (sub) updateCartQuantity(sub.dataset.cartSub, -1);
+                if (removeCart) removeCartItem(removeCart.dataset.cartRemove);
             });
+
             const exportButton = $('#export-button');
             if (exportButton) exportButton.addEventListener('click', () => {
-                const content = inventory.map((item) => `Item: ${item.name}\nCategory: ${item.category || 'Uncategorized'}\nPrice: ${itemPrice(item)}\nQuantity: ${item.quantity}\nUpdated: ${item.updatedAt}\n---`).join('\n');
+                const content = inventory.map((item) => `Item: ${item.name}\nCategory: ${item.category || 'Uncategorized'}\nPrice: ${itemPrice(item)}\nUpdated: ${item.updatedAt}\n---`).join('\n');
                 const blob = new Blob([content || 'No cafe menu records.'], {
                     type: 'text/plain'
                 });
@@ -1368,6 +1607,7 @@
                 link.click();
                 URL.revokeObjectURL(link.href);
             });
+
             const importFile = $('#import-file');
             if (importFile) importFile.addEventListener('change', (event) => {
                 const file = event.target.files[0];
@@ -1379,17 +1619,14 @@
                         const nameLine = lines.find((line) => line.startsWith('Item: '));
                         const categoryLine = lines.find((line) => line.startsWith('Category: '));
                         const priceLine = lines.find((line) => line.startsWith('Price: '));
-                        const quantityLine = lines.find((line) => line.startsWith('Quantity: '));
                         const name = nameLine ? nameLine.slice(6).trim() : '';
                         const category = categoryLine ? categoryLine.slice(10).trim() : '';
                         const price = Number(priceLine ? priceLine.slice(7) : 0);
-                        const quantity = Number(quantityLine ? quantityLine.slice(10) : '');
-                        return name && Number.isFinite(price) && price >= 0 && Number.isInteger(quantity) && quantity >= 0 ? {
+                        return name && Number.isFinite(price) && price >= 0 ? {
                             id: crypto.randomUUID(),
                             name,
                             category,
                             price,
-                            quantity,
                             updatedAt: new Date().toISOString()
                         } : null;
                     }).filter(Boolean);
@@ -1403,13 +1640,15 @@
                 };
                 reader.readAsText(file);
             });
+
             const clearButton = $('#clear-button');
             if (clearButton) clearButton.addEventListener('click', () => {
-                if (inventory.length && window.confirm('Clear all inventory records?')) {
+                if (inventory.length && window.confirm('Clear all menu items?')) {
                     inventory = [];
                     saveInventory();
                 }
             });
+
             const adminForm = $('#admin-form');
             if (adminForm) adminForm.addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -1424,17 +1663,20 @@
                 pendingAdminAction = null;
                 if (action) action();
             });
+
             const closeAdmin = () => {
                 $('#admin-modal').hidden = true;
                 pendingAdminAction = null;
             };
-            $('#admin-close').addEventListener('click', closeAdmin);
-            $('#admin-cancel').addEventListener('click', closeAdmin);
+            if ($('#admin-close')) $('#admin-close').addEventListener('click', closeAdmin);
+            if ($('#admin-cancel')) $('#admin-cancel').addEventListener('click', closeAdmin);
             if ($('#today')) $('#today').textContent = new Intl.DateTimeFormat('en', {
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric'
             }).format(new Date());
+
+            showTab('menu');
             render();
         })();
     </script>
